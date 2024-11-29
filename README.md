@@ -1,7 +1,7 @@
-# CIS 440 Team # Final Project
+# CIS 440 Team 3 Final Project
 
-Recipe Finder App
-A simple recipe recommendation application that allows users to search for recipes based on their interests. The app uses the Spoonacular API to fetch recipe data and provides an intuitive interface for users to explore and view detailed recipe information.
+## Recipe Finder App
+### A simple recipe recommendation application that allows users to search for recipes based on their interests. The app uses the Spoonacular API to fetch recipe data and provides an intuitive interface for users to explore and view detailed recipe information.
 
 Table of Contents
 Features
@@ -29,19 +29,17 @@ API Integration: Utilizes the Spoonacular API for rich recipe data.
 
 Technologies Used
 Frontend:
-
 React.js
 Axios
 React Router DOM
-Backend:
 
+Backend:
 Node.js
 Express.js
 Axios
 Dotenv (for environment variables)
 Cors
 API:
-
 Spoonacular API
 Prerequisites
 Before you begin, ensure you have met the following requirements:
@@ -54,9 +52,12 @@ Download the Windows installer from Node.js official website.
 Run the installer, follow the prompts, and install Node.js and npm.
 Mac:
 
+
 Download the macOS installer from Node.js official website.
 
+
 Alternatively, you can use Homebrew:
+
 
 bash
 Copy code
