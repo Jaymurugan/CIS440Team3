@@ -1,9 +1,9 @@
 // src/App.js
 import React, { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import SearchBar from './Components/searchbar';
-import RecipeList from './Components/recipelist';
-import RecipeDetail from './Components/recipedetail';
+import SearchBar from './components/Searchbar';
+import RecipeList from './components/recipelist';
+import RecipeDetail from './components/recipedetail';
 
 function App() {
   const [recipes, setRecipes] = useState([]);
