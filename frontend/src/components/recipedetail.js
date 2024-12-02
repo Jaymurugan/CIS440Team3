@@ -1,17 +1,33 @@
 // src/components/RecipeDetail.js
-import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import React, { useEffect, useState, useContext } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
+
 
 function RecipeDetail() {
   const { id } = useParams();
   const [recipe, setRecipe] = useState(null);
 
-  useEffect(() => {
-    fetch(`/api/recipe/${id}`)
-      .then((res) => res.json())
-      .then((data) => setRecipe(data))
-      .catch((err) => console.error('Error:', err));
-  }, [id]);
+  // Inside useEffect in RecipeDetail.js
+useEffect(() => {
+  fetch(`/api/recipe/${id}`, {
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+  })
+    .then((res) => {
+      if (res.status === 401 || res.status === 403) {
+        setAuthToken(null);
+        navigate('/login');
+        throw new Error('Unauthorized');
+      }
+      if (!res.ok) throw new Error('Failed to fetch recipe');
+      return res.json();
+    })
+    .then((data) => setRecipe(data))
+    .catch((err) => console.error('Error:', err));
+}, [id, authToken, navigate, setAuthToken]);
+
 
   if (!recipe) return <div>Loading...</div>;
 
