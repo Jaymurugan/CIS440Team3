@@ -1,0 +1,34 @@
+/* src/index.css */
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+
+h1 {
+  text-align: center;
+}
+
+form {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+input {
+  width: 300px;
+  padding: 10px;
+  font-size: 16px;
+}
+
+button {
+  padding: 10px 15px;
+  font-size: 16px;
+}
+
+div {
+  text-align: center;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
