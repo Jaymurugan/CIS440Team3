@@ -7,6 +7,13 @@
   pointer-events: none;
 }
 
+/* Change background color of the entire page */
+body {
+  background-color: #03070f; /* Light gray background for the whole page */
+  margin: 0; /* Remove default margin */
+  font-family: Arial, sans-serif; /* Optional: Set a global font */
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -35,4 +42,35 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.logout-button {
+  margin-bottom: 20px;
+}
+
+.recipe-list {
+  display: flex;
+  flex-wrap: wrap; /* This allows items to wrap to the next line when needed */
+  gap: 20px; /* Adds space between items */
+  justify-content: flex-start; /* Align items to the start of the container */
+}
+
+/* Styling for individual recipe items */
+.recipe-item {
+  width: 300px; /* Control the width of each item */
+  border: 1px solid #ccc; /* Optional: Add a border for better visualization */
+  padding: 10px;
+  box-sizing: border-box; /* Ensure padding doesn't affect total width */
+}
+
+.recipe-item img {
+  width: 100%; /* Make the image fit the width of the container */
+  height: auto;
+  border-radius: 8px; /* Optional: Add rounded corners to the images */
+}
+
+.recipe-item h3 {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #333;
 }

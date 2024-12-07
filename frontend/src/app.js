@@ -7,6 +7,7 @@ import RecipeDetail from './components/recipedetail';
 import Register from './components/Register';
 import Login from './components/Login';
 import { AuthContext } from './context/AuthContext';
+import './App.css';
 
 function App() {
   const [recipes, setRecipes] = useState([]);
@@ -37,7 +38,7 @@ function App() {
   return (
     <div>
       <h1>Recipe Finder</h1>
-      {authToken && <button onClick={handleLogout}>Logout</button>}
+      {authToken && <button onClick={handleLogout} className="logout-button">Logout</button>}
       <Routes>
         <Route
           path="/"
@@ -45,7 +46,7 @@ function App() {
             authToken ? (
               <>
                 <SearchBar onSearch={handleSearch} />
-                <RecipeList recipes={recipes} />
+                <RecipeList recipes={recipes}  />
               </>
             ) : (
               <Navigate to="/login" />

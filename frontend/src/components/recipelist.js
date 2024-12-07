@@ -8,10 +8,10 @@ function RecipeList({ recipes }) {
   }
 
   return (
-    <div>
+    <div className="recipe-list">
       {recipes.map((recipe) => (
-        <div key={recipe.id}>
-          <Link to={`/recipe/${recipe.id}`}>
+        <div key={recipe.id} className="recipe-item">
+          <Link to={`/recipe/${recipe.id} `}>
             <h3>{recipe.title}</h3>
             <img src={recipe.image} alt={recipe.title} />
           </Link>
