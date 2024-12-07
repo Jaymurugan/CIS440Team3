@@ -132,6 +132,23 @@ function authenticateToken(req, res, next) {
   });
 }
 
+// get username
+app.get('/api/username', authenticateToken, async (req, res) => {
+  try {
+    const userId = req.user.userId;
+
+    // Find user by userId (use whatever unique identifier you stored in JWT)
+    const user = await User.findOne({ where: { id: userId } });
+    if (!user)
+      return res.status(404).json({ error: 'User not found' });
+
+    // Return the username
+    res.json({ username: user.username });
+  } catch (error) {
+    console.error('Error fetching username:', error.message);
+    res.status(500).json({ error: 'Failed to retrieve username' });
+  }
+});
 
 // Start the server
 const PORT = process.env.PORT || 5001;

@@ -7,6 +7,7 @@ import RecipeDetail from './components/recipedetail';
 import Register from './components/Register';
 import Login from './components/Login';
 import { AuthContext } from './context/AuthContext';
+import ProfileButton from './components/ProfileButton';
 import './App.css';
 
 function App() {
@@ -35,10 +36,23 @@ function App() {
     setAuthToken(null);
   };
 
+  const handleNavigateToSavedRecipes = () => {
+    // You can handle navigation to the saved recipes page, for example:
+    window.location.href = '/saved-recipes'; // Update the URL to point to your saved recipes page
+  };
+
   return (
     <div>
+      {authToken && (
+        <div className="profile-button-wrapper">
+          <ProfileButton
+            authToken={authToken}
+            onLogout={handleLogout}
+            onNavigateToSavedRecipes={handleNavigateToSavedRecipes}
+          />
+        </div>
+      )}
       <h1>Recipe Finder</h1>
-      {authToken && <button onClick={handleLogout} className="logout-button">Logout</button>}
       <Routes>
         <Route
           path="/"
