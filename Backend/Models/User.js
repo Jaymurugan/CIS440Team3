@@ -11,7 +11,9 @@ const User = sequelize.define('User', {
   password: {
     type: DataTypes.STRING,
     allowNull: false,
-  },
+  }, 
+}, {
+  tableName: 'User',  // Specify the custom table name (singular form)
 });
 
 module.exports = User;

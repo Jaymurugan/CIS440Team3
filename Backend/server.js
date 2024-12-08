@@ -19,6 +19,8 @@ app.use(
   })
 );
 
+const UserRecipes = require('./Models/UserRecipes')
+
 // Get the API key from environment variables
 const API_KEY = process.env.SPOONACULAR_API_KEY;
 
@@ -147,6 +149,77 @@ app.get('/api/username', authenticateToken, async (req, res) => {
   } catch (error) {
     console.error('Error fetching username:', error.message);
     res.status(500).json({ error: 'Failed to retrieve username' });
+  }
+});
+
+//Route for saving recipes
+app.post('/api/recipe/:id/save', authenticateToken, async (req, res) => {
+  const { id } = req.params;  // Recipe ID (e.g., 12345)
+  const username = req.user.username;  // Get the username from the authenticated user
+
+  try {
+    // Fetch the full recipe details from Spoonacular
+    const response = await axios.get(
+      `https://api.spoonacular.com/recipes/${id}/information`,
+      {
+        params: {
+          apiKey: API_KEY,
+        },
+      }
+    );
+
+    const recipe = response.data;  // Full recipe data
+
+    // Check if the recipe is already saved by the user
+    const existingRecipe = await UserRecipes.findOne({
+      where: { user_id: req.user.userId, recipe_id: id },
+    });
+
+    if (existingRecipe) {
+      return res.status(400).json({ error: 'Recipe already saved' });
+    }
+
+    // Save the full recipe response as it is
+    const savedRecipe = await UserRecipes.create({
+      user_id: req.user.userId,  // Use username as the foreign key
+      recipe_id: id,
+      recipe_data: JSON.stringify(recipe),  // Store the full recipe data as a JSON string
+    });
+
+    res.json({ message: 'Recipe saved successfully', savedRecipe });
+  } catch (error) {
+    console.error('Error saving recipe:', error.message);
+    res.status(500).json({ error: 'Error saving recipe' });
+  }
+});
+
+// Route to get all saved recipes for a user
+app.get('/api/recipes', authenticateToken, async (req, res) => {
+  const username = req.user.username;  // Get the username from the authenticated user
+
+  try {
+    // Fetch all saved recipes for the authenticated user from the UserRecipes table
+    const userID = req.user.userId
+    const savedRecipes = await UserRecipes.findAll({
+      where: { user_id: userID },
+    });
+
+    // If no saved recipes are found, return a message
+    if (savedRecipes.length === 0) {
+      return res.json({ message: 'No saved recipes' });
+    }
+
+    // Extract and parse the recipe data from the recipe_data column (which is a JSON string)
+    const recipes = savedRecipes.map((UserRecipes) => {
+      return JSON.parse(UserRecipes.recipe_data);  // Parse the recipe_data JSON string into an object
+    });
+
+    // Return the parsed recipes to the client
+    res.json(recipes);
+
+  } catch (error) {
+    console.error('Error retrieving saved recipes:', error.message);
+    res.status(500).json({ error: 'Error retrieving saved recipes' });
   }
 });
 

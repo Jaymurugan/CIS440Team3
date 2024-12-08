@@ -77,13 +77,12 @@ body {
 
 .profile-button-wrapper {
   display: flex;
-  justify-content: flex-end; /* Align the profile button to the right */
+  justify-content: flex-end;
   background: transparent;
 }
 
 .profile-button {
   display: flex;
-  align-items: center;
   cursor: pointer;
 }
 
@@ -91,11 +90,11 @@ body {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  margin-right: 8px;
 }
 
 .profile-button__username {
   font-size: 14px;
+  margin-top: 10px;
 }
 
 .profile-button__dropdown {
@@ -121,4 +120,10 @@ body {
 
 .dropdown-item:hover {
   background-color: #f0f0f0;
+}
+
+.profile-button__icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
 }

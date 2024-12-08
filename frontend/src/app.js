@@ -37,8 +37,23 @@ function App() {
   };
 
   const handleNavigateToSavedRecipes = () => {
-    // You can handle navigation to the saved recipes page, for example:
-    window.location.href = '/saved-recipes'; // Update the URL to point to your saved recipes page
+    fetch('/api/recipes', {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    })  // Make a GET request to the /api/recipes route
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch saved recipes');
+        }
+        return response.json();  // Parse the response as JSON
+      })
+      .then((data) => {
+        setRecipes(data);  // Update the recipes state with the fetched data
+      })
+      .catch((error) => {
+        console.error('Error fetching saved recipes:', error);
+      });
   };
 
   return (
