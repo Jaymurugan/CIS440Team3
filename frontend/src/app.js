@@ -1,5 +1,4 @@
-// src/App.js
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import SearchBar from './components/Searchbar';
 import RecipeList from './components/recipelist';
@@ -12,55 +11,123 @@ import './App.css';
 
 function App() {
   const [recipes, setRecipes] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const { authToken, setAuthToken } = useContext(AuthContext);
 
+  const fetchRecipes = async (query) => {
+    setLoading(true);
+    setErrorMessage('');
+    try {
+      const response = await fetch(`/api/search?query=${encodeURIComponent(query)}`, {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      });
+
+      if (response.status === 401 || response.status === 403) {
+        setAuthToken(null);
+        throw new Error('Unauthorized. Redirecting to login.');
+      }
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch recipes.');
+      }
+
+      const data = await response.json();
+      setRecipes(data);
+    } catch (error) {
+      console.error('Error fetching recipes:', error);
+      setRecipes([]);
+      setErrorMessage(error.message || 'Something went wrong.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleSearch = (query) => {
-    fetch(`/api/search?query=${encodeURIComponent(query)}`, {
-      headers: {
-        Authorization: `Bearer ${authToken}`,
-      },
-    })
-      .then((res) => {
-        if (res.status === 401 || res.status === 403) {
-          setAuthToken(null);
-          throw new Error('Unauthorized');
-        }
-        if (!res.ok) throw new Error('Search failed');
-        return res.json();
-      })
-      .then((data) => setRecipes(data))
-      .catch((err) => console.error('Error:', err));
+    if (query.trim() === '') {
+      setErrorMessage('Please enter a search term.');
+      setRecipes([]);
+      return;
+    }
+    fetchRecipes(query);
+  };
+
+  const handleFilter = (filter) => {
+    fetchRecipes(filter); // Use the filter keyword for fetching recipes
   };
 
   const handleLogout = () => {
     setAuthToken(null);
   };
 
-  const handleNavigateToSavedRecipes = () => {
-    // You can handle navigation to the saved recipes page, for example:
-    window.location.href = '/saved-recipes'; // Update the URL to point to your saved recipes page
-  };
+  useEffect(() => {
+    if (authToken) {
+      fetchRecipes('default');
+    }
+  }, [authToken]);
 
   return (
-    <div>
+    <div className="app-container">
       {authToken && (
         <div className="profile-button-wrapper">
           <ProfileButton
             authToken={authToken}
             onLogout={handleLogout}
-            onNavigateToSavedRecipes={handleNavigateToSavedRecipes}
+            onNavigateToSavedRecipes={() => fetchRecipes('saved')}
           />
         </div>
       )}
-      <h1>Recipe Finder</h1>
+
       <Routes>
         <Route
           path="/"
           element={
             authToken ? (
               <>
-                <SearchBar onSearch={handleSearch} />
-                <RecipeList recipes={recipes}  />
+                <header className="welcome-banner">
+                  <h1 className="welcome-title">Welcome to Recipe Finder!</h1>
+                  <p className="welcome-tagline">Discover recipes for every craving.</p>
+                </header>
+                <div className="search-section">
+                  <SearchBar onSearch={handleSearch} />
+                  <div className="search-filters">
+                    <button
+                      className="filter-button"
+                      onClick={() => handleFilter('Vegetarian')}
+                    >
+                      Vegetarian
+                    </button>
+                    <button
+                      className="filter-button"
+                      onClick={() => handleFilter('Desserts')}
+                    >
+                      Desserts
+                    </button>
+                    <button
+                      className="filter-button"
+                      onClick={() => handleFilter('Quick Meals')}
+                    >
+                      Quick Meals
+                    </button>
+                  </div>
+                </div>
+                <main>
+                  {loading ? (
+                    <div className="loading-message">Loading recipes...</div>
+                  ) : errorMessage ? (
+                    <div className="error-message">{errorMessage}</div>
+                  ) : recipes.length > 0 ? (
+                    <RecipeList recipes={recipes} />
+                  ) : (
+                    <div className="empty-state">
+                      <p className="empty-message">
+                        No results yet! Try searching for something delicious.
+                      </p>
+                    </div>
+                  )}
+                </main>
               </>
             ) : (
               <Navigate to="/login" />
@@ -85,4 +152,3 @@ function App() {
 }
 
 export default App;
-

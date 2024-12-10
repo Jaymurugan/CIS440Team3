@@ -1,4 +1,3 @@
-// frontend/src/components/Login.js
 import React, { useState, useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
@@ -18,7 +17,10 @@ function Login() {
       body: JSON.stringify({ username, password }),
     })
       .then((res) => {
-        if (!res.ok) return res.json().then((data) => { throw new Error(data.error || 'Login failed'); });
+        if (!res.ok)
+          return res.json().then((data) => {
+            throw new Error(data.error || 'Login failed');
+          });
         return res.json();
       })
       .then((data) => {
@@ -29,31 +31,43 @@ function Login() {
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={handleLogin}>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
+    <div className="auth-container">
+      <div className="auth-card">
+        <img
+          src="/logo192.png"
+          alt="Recipe Finder Logo"
+          className="auth-logo"
         />
-        <br />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <br />
-        <button type="submit">Login</button>
-      </form>
-      <p>
-        Don't have an account? <Link to="/register">Register here</Link>.
-      </p>
+        <h2 className="auth-header">Login to Recipe Finder</h2>
+        {error && <p className="auth-error">{error}</p>}
+        <form onSubmit={handleLogin}>
+          <input
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            className="auth-input"
+            required
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="auth-input"
+            required
+          />
+          <button type="submit" className="auth-button">
+            Log In
+          </button>
+        </form>
+        <p className="auth-footer">
+          Don’t have an account?{' '}
+          <Link to="/register" className="auth-link">
+            Register here.
+          </Link>
+        </p>
+      </div>
     </div>
   );
 }

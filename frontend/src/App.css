@@ -1,124 +1,156 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-/* Change background color of the entire page */
-body {
-  background-color: white; /* Light gray background for the whole page */
-  margin: 0; /* Remove default margin */
-  font-family: Arial, sans-serif; /* Optional: Set a global font */
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Auth Pages Styling */
+.auth-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #1e1e2f, #2c2c3c);
+  margin: 0;
 }
 
-.App-link {
-  color: #61dafb;
+.auth-card {
+  background: linear-gradient(135deg, #3a3f44, #50575d);
+  padding: 40px 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  width: 400px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.logout-button {
+.auth-logo {
+  width: 80px;
+  height: auto;
   margin-bottom: 20px;
 }
 
-.recipe-list {
-  display: flex;
-  flex-wrap: wrap; /* This allows items to wrap to the next line when needed */
-  gap: 20px; /* Adds space between items */
-  justify-content: flex-start; /* Align items to the start of the container */
+.auth-header {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  font-weight: bold;
+  color: white;
 }
 
-/* Styling for individual recipe items */
-.recipe-item {
-  width: 300px; /* Control the width of each item */
-  border: 1px solid #ccc; /* Optional: Add a border for better visualization */
-  padding: 10px;
-  box-sizing: border-box; /* Ensure padding doesn't affect total width */
-}
-
-.recipe-item img {
-  width: 100%; /* Make the image fit the width of the container */
-  height: auto;
-  border-radius: 8px; /* Optional: Add rounded corners to the images */
-}
-
-.recipe-item h3 {
-  text-align: center;
-  font-size: 1.2rem;
-  color: #333;
-}
-
-.profile-button-wrapper {
-  display: flex;
-  justify-content: flex-end; /* Align the profile button to the right */
-  background: transparent;
-}
-
-.profile-button {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-}
-
-.profile-button__image {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  margin-right: 8px;
-}
-
-.profile-button__username {
-  font-size: 14px;
-}
-
-.profile-button__dropdown {
-  position: absolute;
-  top: 50px;
-  right: 0;
-  background-color: white;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: 150px;
-  z-index: 10;
-}
-
-.dropdown-item {
-  padding: 10px;
-  text-align: left;
-  border: none;
-  background: none;
+.auth-input {
   width: 100%;
-  cursor: pointer;
-  font-size: 14px;
-  color: #333;
+  padding: 10px;
+  margin-bottom: 15px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
 }
 
-.dropdown-item:hover {
-  background-color: #f0f0f0;
+.auth-input:focus {
+  border-color: #61dafb;
+  outline: none;
+}
+
+.auth-button {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  color: white;
+  background: #61dafb;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.auth-button:hover {
+  background: #4ab8e0;
+}
+
+.auth-error {
+  color: red;
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+}
+
+.auth-footer {
+  font-size: 0.9rem;
+  color: #ddd;
+}
+
+.auth-link {
+  color: #61dafb;
+  text-decoration: none;
+}
+
+.auth-link:hover {
+  text-decoration: underline;
+}
+
+/* Recipe Finder Styling */
+body {
+  background: linear-gradient(135deg, #1e1e2f, #2c2c3c);
+  margin: 0;
+  font-family: 'Roboto', Arial, sans-serif;
+  color: white;
+}
+
+.welcome-banner {
+  text-align: center;
+  padding: 20px 0;
+  background: linear-gradient(to right, #61dafb, #4ab8e0);
+  color: #1e1e2f;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.welcome-tagline {
+  margin-top: 10px;
+  font-size: 1.2rem;
+  color: #eee;
+}
+
+.search-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.search-bar {
+  width: 60%;
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.search-bar input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  font-size: 1rem;
+}
+
+.search-bar button {
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  background-color: #61dafb;
+  color: #1e1e2f;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.search-filters {
+  display: flex;
+  gap: 10px;
+}
+
+.filter-button {
+  padding: 8px 15px;
+  border: 1px solid #61dafb;
+  background: transparent;
+  color: #61dafb;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.filter-button:hover {
+  background: #61dafb;
+  color: #1e1e2f;
 }

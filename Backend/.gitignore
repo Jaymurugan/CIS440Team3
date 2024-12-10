@@ -1,1 +1,10 @@
 node_modules
+# Ignore node_modules cache
+frontend/node_modules/.cache/
+
+# Ignore SQLite database
+Backend/database.sqlite
+
+# Ignore other cache files
+*.pack
+*.eslintcache
